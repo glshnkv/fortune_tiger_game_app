@@ -39,6 +39,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const OnboardingScreen(),
       );
     },
+    SlotMachineRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SlotMachineScreen(),
+      );
+    },
   };
 }
 
@@ -94,6 +100,20 @@ class OnboardingRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'OnboardingRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SlotMachineScreen]
+class SlotMachineRoute extends PageRouteInfo<void> {
+  const SlotMachineRoute({List<PageRouteInfo>? children})
+      : super(
+          SlotMachineRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SlotMachineRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

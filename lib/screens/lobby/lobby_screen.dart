@@ -78,6 +78,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                   if (_current == 0) {
                     context.router.push(FortuneGameRoute());
                   } else if (_current == 1) {
+                    context.router.push(SlotMachineRoute());
                   } else if (_current == 2) {
                     context.router.push(DailyBonusRoute());
                   }

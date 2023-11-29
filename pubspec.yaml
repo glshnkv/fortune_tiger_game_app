@@ -20,6 +20,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   carousel_slider: ^4.2.1
   kbspinningwheel: ^1.0.3
+  flutter_slot_machine: ^0.0.1
 
   cupertino_icons: ^1.0.2
 
@@ -51,6 +52,7 @@ flutter:
      - assets/images/elements/
      - assets/images/lobby-images/
      - assets/images/fortune-game-images/
+     - assets/images/slot-machine-images/
 
   fonts:
      - family: Montserrat

@@ -85,7 +85,16 @@ class _FortuneGameScreenState extends State<FortuneGameScreen> {
                   ],
                 ),
               ),
-              Text(result),
+              StrokeText(
+                text: result,
+                strokeWidth: 5,
+                strokeColor: AppColors.darkred,
+                textStyle: TextStyle(
+                  fontSize: 22,
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               ActionButtonWidget(
                   title: 'Spin!',
                   onTap: () {
