@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:fortune_tiger_game_app/router/router.dart';
+import 'package:fortune_tiger_game_app/screens/lobby/widgets/menu_dialog.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -37,9 +39,12 @@ class _LobbyScreenState extends State<LobbyScreen> {
               Column(
                 children: [
                   Image.asset('assets/images/lobby-images/top-image.png',
-                      width: MediaQuery.of(context).size.width, fit: BoxFit.fill),
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fill),
                   Container(
-                      color: AppColors.yellow, height: 5, width: double.infinity),
+                      color: AppColors.yellow,
+                      height: 5,
+                      width: double.infinity),
                 ],
               ),
               CarouselSlider(
@@ -69,21 +74,37 @@ class _LobbyScreenState extends State<LobbyScreen> {
               ),
               ActionButtonWidget(
                 title: _current == 2 ? 'Get bonuses' : 'Start to play',
-                onTap: () {},
+                onTap: () {
+                  if (_current == 0) {
+                    context.router.push(FortuneGameRoute());
+                  } else if (_current == 1) {
+                  } else if (_current == 2) {
+                    context.router.push(DailyBonusRoute());
+                  }
+                },
               ),
               TextButton(
-                child: StrokeText(text: 'Menu', strokeWidth: 5, strokeColor: AppColors.darkred, textStyle: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w700,
-                ),),
-                onPressed: () {},
+                child: StrokeText(
+                  text: 'Menu',
+                  strokeWidth: 5,
+                  strokeColor: AppColors.darkred,
+                  textStyle: TextStyle(
+                    fontSize: 18,
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                onPressed: () async {
+                  await showDialog(
+                      context: context, builder: (_) => MenuDialog());
+                },
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),
-        Container()
       ],
     );
   }

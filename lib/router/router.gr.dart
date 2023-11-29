@@ -15,6 +15,18 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    DailyBonusRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DailyBonusScreen(),
+      );
+    },
+    FortuneGameRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FortuneGameScreen(),
+      );
+    },
     LobbyRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -28,6 +40,34 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [DailyBonusScreen]
+class DailyBonusRoute extends PageRouteInfo<void> {
+  const DailyBonusRoute({List<PageRouteInfo>? children})
+      : super(
+          DailyBonusRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DailyBonusRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FortuneGameScreen]
+class FortuneGameRoute extends PageRouteInfo<void> {
+  const FortuneGameRoute({List<PageRouteInfo>? children})
+      : super(
+          FortuneGameRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FortuneGameRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

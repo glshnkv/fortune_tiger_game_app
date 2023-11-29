@@ -368,6 +368,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
+  kbspinningwheel:
+    dependency: "direct main"
+    description:
+      name: kbspinningwheel
+      sha256: "2d962bcc1b762721d222e230175dfb7b03987e9c072c307819111646f2acdd3c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   lints:
     dependency: transitive
     description:
