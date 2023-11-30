@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
+import 'package:fortune_tiger_game_app/widgets/scores_panel/scores_panel.dart';
 import 'package:stroke_text/stroke_text.dart';
 
 @RoutePage()
@@ -80,9 +81,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                   onTap: () {
                     context.router.pop();
                   }),
-              SizedBox(
-                height: 20,
-              ),
+              ScoresPanel(),
             ],
           ),
         ),

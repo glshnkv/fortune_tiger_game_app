@@ -28,7 +28,7 @@ class WinDialog extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset('assets/images/elements/diamond-large.png'),
+                    Image.asset('assets/images/elements/present-large.png'),
                     SizedBox(
                       width: 220,
                       child: Column(

@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fortune_tiger_game_app/router/router.dart';
 import 'package:fortune_tiger_game_app/screens/lobby/widgets/menu_dialog.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
+import 'package:fortune_tiger_game_app/widgets/scores_panel/bloc/scores_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stroke_text/stroke_text.dart';
 
@@ -81,6 +83,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     context.router.push(SlotMachineRoute());
                   } else if (_current == 2) {
                     context.router.push(DailyBonusRoute());
+                    context.read<ScoresBloc>().add(AddGiftsEvent(giftsCount: 1));
                   }
                 },
               ),

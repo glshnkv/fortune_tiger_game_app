@@ -2,10 +2,13 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slot_machine/slot_machine.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
 import 'package:fortune_tiger_game_app/widgets/lost_dialog.dart';
+import 'package:fortune_tiger_game_app/widgets/scores_panel/bloc/scores_bloc.dart';
+import 'package:fortune_tiger_game_app/widgets/scores_panel/scores_panel.dart';
 import 'package:fortune_tiger_game_app/widgets/win_dialog.dart';
 import 'package:stroke_text/stroke_text.dart';
 
@@ -31,7 +34,7 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
 
   void onStart() {
     final index = Random().nextInt(20);
-    _controller.start(hitRollItemIndex: index < 5 ? index : null);
+    _controller.start(hitRollItemIndex: index < 3 ? index : null);
   }
 
   @override
@@ -84,6 +87,9 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                                 height: 80,
                                 reelWidth: 71,
                                 reelSpacing: 26,
+                                onCreated: (controller) {
+                                  _controller = controller;
+                                },
                                 rollItems: [
                                   RollItem(
                                       index: 0,
@@ -98,16 +104,14 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                                       child: Image.asset(
                                           'assets/images/slot-machine-images/waffles.png')),
                                 ],
-                                onCreated: (controller) {
-                                  _controller = controller;
-                                },
-                                onFinished: (resultIndexes) {
+                                onFinished: (resultIndexes) async {
                                   print('Result: $resultIndexes');
-                                  if (resultIndexes[0] == resultIndexes[1] &&
-                                      resultIndexes[1] == resultIndexes[2]) {
+                                  await Future.delayed(const Duration(seconds: 1));
+                                  if (resultIndexes.every((element) => element == resultIndexes[0])) {
                                     showDialog(
                                         context: context,
                                         builder: (_) => WinDialog());
+                                    context.read<ScoresBloc>().add(AddGiftsEvent(giftsCount: 3));
                                   } else {
                                     showDialog(
                                         context: context,
@@ -176,96 +180,15 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                       padding: const EdgeInsets.only(top: 24),
                       child: ActionButtonWidget(
                         title: 'Spin',
-                        onTap: () => onStart(),
+                        onTap: () async {
+                          onStart();
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset('assets/images/elements/diamond-small.png'),
-                        SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                      'assets/images/elements/score-background.png'),
-                                ),
-                              ),
-                              Positioned(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: StrokeText(
-                                      text: '0',
-                                      strokeWidth: 5,
-                                      strokeColor: AppColors.darkred,
-                                      textStyle: TextStyle(
-                                        fontSize: 18,
-                                        color: AppColors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                      'assets/images/elements/score-background.png'),
-                                ),
-                              ),
-                              Positioned(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: StrokeText(
-                                      text: '0',
-                                      strokeWidth: 5,
-                                      strokeColor: AppColors.darkred,
-                                      textStyle: TextStyle(
-                                        fontSize: 18,
-                                        color: AppColors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Image.asset('assets/images/elements/present-small.png'),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              ScoresPanel(),
             ],
           ),
         ),
