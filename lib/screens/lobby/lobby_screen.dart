@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fortune_tiger_game_app/router/router.dart';
+import 'package:fortune_tiger_game_app/screens/daily_bonus/bloc/daily_bonus_bloc.dart';
 import 'package:fortune_tiger_game_app/screens/lobby/widgets/menu_dialog.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
@@ -79,11 +80,14 @@ class _LobbyScreenState extends State<LobbyScreen> {
                 onTap: () {
                   if (_current == 0) {
                     context.router.push(FortuneGameRoute());
+                    context.read<ScoresBloc>().add(UpdateScoresEvent());
                   } else if (_current == 1) {
                     context.router.push(SlotMachineRoute());
+                    context.read<ScoresBloc>().add(UpdateScoresEvent());
                   } else if (_current == 2) {
                     context.router.push(DailyBonusRoute());
-                    context.read<ScoresBloc>().add(AddGiftsEvent(giftsCount: 1));
+                    context.read<DailyBonusBloc>().add(GetDailyBonusEvent());
+                    context.read<ScoresBloc>().add(UpdateScoresEvent());
                   }
                 },
               ),

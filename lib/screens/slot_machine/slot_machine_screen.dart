@@ -106,12 +106,18 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                                 ],
                                 onFinished: (resultIndexes) async {
                                   print('Result: $resultIndexes');
-                                  await Future.delayed(const Duration(seconds: 1));
-                                  if (resultIndexes.every((element) => element == resultIndexes[0])) {
+                                  await Future.delayed(
+                                      const Duration(seconds: 1));
+                                  if (resultIndexes.every((element) =>
+                                      element == resultIndexes[0])) {
+                                    context.read<ScoresBloc>().add(
+                                        AddDiamondsEvent(diamondsCount: 1000));
+                                    context
+                                        .read<ScoresBloc>()
+                                        .add(UpdateScoresEvent());
                                     showDialog(
                                         context: context,
                                         builder: (_) => WinDialog());
-                                    context.read<ScoresBloc>().add(AddGiftsEvent(giftsCount: 3));
                                   } else {
                                     showDialog(
                                         context: context,
@@ -182,6 +188,11 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                         title: 'Spin',
                         onTap: () async {
                           onStart();
+                          context.read<ScoresBloc>().add(
+                              PayForSpinEvent());
+                          context
+                              .read<ScoresBloc>()
+                              .add(UpdateScoresEvent());
                         },
                       ),
                     ),

@@ -14,3 +14,12 @@ class AddGiftsEvent extends ScoresEvent {
 
   AddGiftsEvent({required this.giftsCount});
 }
+
+class PayForSpinEvent extends ScoresEvent {
+}
+
+class UpdateScoresEvent extends ScoresEvent {
+}
+
+class CheckDiamondsCounterEvent extends ScoresEvent {
+}

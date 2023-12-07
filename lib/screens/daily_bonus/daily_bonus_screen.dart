@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fortune_tiger_game_app/screens/daily_bonus/bloc/daily_bonus_bloc.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
+import 'package:fortune_tiger_game_app/widgets/scores_panel/bloc/scores_bloc.dart';
 import 'package:fortune_tiger_game_app/widgets/scores_panel/scores_panel.dart';
 import 'package:stroke_text/stroke_text.dart';
 
@@ -40,45 +43,102 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                       width: double.infinity),
                 ],
               ),
-              SizedBox(
-                height: 320,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Image.asset(
-                            'assets/images/elements/yellow-popup-small.png'),
-                      ),
-                    ),
-                    Positioned(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: StrokeText(
-                          text: 'Daily bonus Name',
-                          strokeWidth: 5,
-                          strokeColor: AppColors.darkred,
-                          textStyle: TextStyle(
-                            fontSize: 25,
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w700,
+              BlocConsumer<DailyBonusBloc, DailyBonusState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is FailureGetBonusState) {
+                    return SizedBox(
+                      height: 320,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                  'assets/images/elements/grey-popup-large.png'),
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: SizedBox(
+                                width: 250,
+                                child: Stack(
+                                  children: <Widget>[
+                                    Text(
+                                      textAlign: TextAlign.center,
+                                      'You Already Have Daily Bonus',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w700,
+                                        foreground: Paint()
+                                          ..style = PaintingStyle.stroke
+                                          ..strokeWidth = 5
+                                          ..color = AppColors.darkred,
+                                      ),
+                                    ),
+                                    // Solid text as fill.
+                                    Text(
+                                      textAlign: TextAlign.center,
+                                      'You Already Have Daily Bonus',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Positioned(
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Image.asset(
-                            'assets/images/elements/present-large.png'),
+                    );
+                  } else {
+                    return SizedBox(
+                      height: 320,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                  'assets/images/elements/yellow-popup-small.png'),
+                            ),
+                          ),
+                          Positioned(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: StrokeText(
+                                text: 'Daily bonus Name',
+                                strokeWidth: 5,
+                                strokeColor: AppColors.darkred,
+                                textStyle: TextStyle(
+                                  fontSize: 25,
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Image.asset(
+                                  'assets/images/elements/diamond-large.png'),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  }
+                },
               ),
               ActionButtonWidget(
                   title: 'OK',
                   onTap: () {
+                    context.read<ScoresBloc>().add(UpdateScoresEvent());
                     context.router.pop();
                   }),
               ScoresPanel(),

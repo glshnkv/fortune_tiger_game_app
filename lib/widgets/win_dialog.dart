@@ -28,7 +28,7 @@ class WinDialog extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset('assets/images/elements/present-large.png'),
+                    Image.asset('assets/images/elements/diamond-large.png'),
                     SizedBox(
                       width: 220,
                       child: Column(
@@ -60,7 +60,7 @@ class WinDialog extends StatelessWidget {
                           ),
                           SizedBox(height: 15),
                           Text(
-                            'You have received 3 gifts!',
+                            'You have received 1000 diamonds!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: AppColors.darkred,

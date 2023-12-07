@@ -5,4 +5,7 @@ class DiamondsRepository {
   int get getDiamondsCount => _diamondsCounter;
 
   void increment(int score) => _diamondsCounter += score;
+
+  void decrement(int score) => _diamondsCounter -= score;
+
 }

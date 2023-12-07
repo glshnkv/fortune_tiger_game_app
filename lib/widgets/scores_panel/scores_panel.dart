@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fortune_tiger_game_app/repository/diamonds_repository.dart';
+import 'package:fortune_tiger_game_app/repository/gifts_repository.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/scores_panel/bloc/scores_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stroke_text/stroke_text.dart';
 
 class ScoresPanel extends StatefulWidget {
@@ -19,7 +22,10 @@ class _ScoresPanelState extends State<ScoresPanel> {
     return BlocConsumer<ScoresBloc, ScoresState>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is UpdateScoresState) {
+        if (state is UpdatingScoresState) {
+          return Container();
+        }
+        else if (state is UpdateScoresState) {
           return Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
