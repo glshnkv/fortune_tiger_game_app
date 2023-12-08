@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:fortune_tiger_game_app/repository/diamonds_repository.dart';
 import 'package:fortune_tiger_game_app/repository/gifts_repository.dart';
+import 'package:fortune_tiger_game_app/services/shared_preferences.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +15,7 @@ class ScoresBloc extends Bloc<ScoresEvent, ScoresState> {
   final DiamondsRepository _diamondsRepository;
   final GiftsRepository _giftsRepository;
   final Future<SharedPreferences> _prefs;
+
 
   ScoresBloc(this._diamondsRepository, this._giftsRepository, this._prefs)
       : super(ScoresInitial()) {
@@ -27,46 +29,51 @@ class ScoresBloc extends Bloc<ScoresEvent, ScoresState> {
 
   }
 
-  void _addDiamondsHandler(AddDiamondsEvent event, Emitter<ScoresState> emit) {
+  void _addDiamondsHandler(AddDiamondsEvent event, Emitter<ScoresState> emit) async {
     emit(UpdatingScoresState());
+    SharedPreferencesService storage = await SharedPreferencesService.getInstance();
     _diamondsRepository.increment(event.diamondsCount);
-    emit(UpdateScoresState(
-        giftsCount: _giftsRepository.getGiftsCount,
-        diamondsCount: _diamondsRepository.getDiamondsCount));
-  }
-
-  void _addGiftsHandler(AddGiftsEvent event, Emitter<ScoresState> emit)  {
-    emit(UpdatingScoresState());
-    _giftsRepository.increment(event.giftsCount);
-    emit(UpdateScoresState(
-        giftsCount: _giftsRepository.getGiftsCount,
-        diamondsCount: _diamondsRepository.getDiamondsCount));
-  }
-
-  void _payForSpinHandler(PayForSpinEvent event, Emitter<ScoresState> emit)  {
-    emit(UpdatingScoresState());
-    _diamondsRepository.decrement(40);
-    emit(UpdateScoresState(
-        giftsCount: _giftsRepository.getGiftsCount,
-        diamondsCount: _diamondsRepository.getDiamondsCount));
-  }
-
-  void _updateScoresHandler(UpdateScoresEvent event, Emitter<ScoresState> emit)  {
-    emit(UpdatingScoresState());
-    final diamonds = _diamondsRepository.getDiamondsCount;
-    final gifts = _giftsRepository.getGiftsCount;
+    storage.diamonds += event.diamondsCount;
+    final diamonds = storage.diamonds;
+    final gifts = storage.gifts;
     emit(UpdateScoresState(
         giftsCount: gifts,
         diamondsCount: diamonds));
   }
 
-  // void _checkDiamondsCounterEventHandler(CheckDiamondsCounterEvent event, Emitter<ScoresState> emit) {
-  //   if (_diamondsRepository.getDiamondsCount >= 40) {
-  //     emit(NotEnoughDiamondsState());
-  //   } else {
-  //     emit(SuccesCheckCounterState());
-  //   }
-  // }
+  void _addGiftsHandler(AddGiftsEvent event, Emitter<ScoresState> emit) async {
+    emit(UpdatingScoresState());
+    SharedPreferencesService storage = await SharedPreferencesService.getInstance();
+    _giftsRepository.increment(event.giftsCount);
+    storage.diamonds += event.giftsCount;
+    final diamonds = storage.diamonds;
+    final gifts = storage.gifts;
+    emit(UpdateScoresState(
+        giftsCount: gifts,
+        diamondsCount: diamonds));
+  }
+
+  void _payForSpinHandler(PayForSpinEvent event, Emitter<ScoresState> emit) async {
+    emit(UpdatingScoresState());
+    SharedPreferencesService storage = await SharedPreferencesService.getInstance();
+    _diamondsRepository.decrement(40);
+    storage.diamonds -= 40;
+    final diamonds = storage.diamonds;
+    final gifts = storage.gifts;
+    emit(UpdateScoresState(
+        giftsCount: gifts,
+        diamondsCount: diamonds));
+  }
+
+  void _updateScoresHandler(UpdateScoresEvent event, Emitter<ScoresState> emit) async {
+    emit(UpdatingScoresState());
+    SharedPreferencesService storage = await SharedPreferencesService.getInstance();
+    final diamonds = storage.diamonds;
+    final gifts = storage.gifts;
+    emit(UpdateScoresState(
+        giftsCount: gifts,
+        diamondsCount: diamonds));
+  }
 
   _initialize() async {
     emit(UpdatingScoresState());

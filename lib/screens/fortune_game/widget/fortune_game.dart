@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fortune_tiger_game_app/services/shared_preferences.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
 import 'package:fortune_tiger_game_app/widgets/scores_panel/bloc/scores_bloc.dart';
@@ -185,19 +186,31 @@ class _FortuneWheelWidgetState extends State<FortuneWheelWidget>
               height: 30,
             ),
             ActionButtonWidget(
-              title: 'Spin', onTap: () {
+              title: 'Spin', onTap: () async {
+              SharedPreferencesService storage =
+              await SharedPreferencesService.getInstance();
+              if (storage.diamonds >= 40) {
                 print(winner);
                 context.read<ScoresBloc>().add(
                     PayForSpinEvent());
                 context
                     .read<ScoresBloc>()
                     .add(UpdateScoresEvent());
-                  if (_controller.isAnimating) return;
+                if (_controller.isAnimating) return;
                 setState(() {
                   winner = Random().nextInt(12);
                 });
-                  _controller.reset();
-                  _controller.forward().orCancel;
+                _controller.reset();
+                _controller.forward().orCancel;
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Oops... Not enough Diamonds',
+                        style: TextStyle(color: AppColors.darkred),
+                      ),
+                      backgroundColor: AppColors.yellow),
+                );
+              }
                 },
             ),
           ],

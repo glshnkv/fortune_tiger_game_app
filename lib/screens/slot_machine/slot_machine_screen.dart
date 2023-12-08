@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slot_machine/slot_machine.dart';
+import 'package:fortune_tiger_game_app/services/shared_preferences.dart';
 import 'package:fortune_tiger_game_app/theme/colors.dart';
 import 'package:fortune_tiger_game_app/widgets/action_button_widget.dart';
 import 'package:fortune_tiger_game_app/widgets/lost_dialog.dart';
@@ -187,12 +188,22 @@ class _SlotMachineScreenState extends State<SlotMachineScreen> {
                       child: ActionButtonWidget(
                         title: 'Spin',
                         onTap: () async {
-                          onStart();
-                          context.read<ScoresBloc>().add(
-                              PayForSpinEvent());
-                          context
-                              .read<ScoresBloc>()
-                              .add(UpdateScoresEvent());
+                          SharedPreferencesService storage =
+                              await SharedPreferencesService.getInstance();
+                          if (storage.diamonds >= 40) {
+                            onStart();
+                            context.read<ScoresBloc>().add(PayForSpinEvent());
+                            context.read<ScoresBloc>().add(UpdateScoresEvent());
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                    'Oops... Not enough Diamonds',
+                                    style: TextStyle(color: AppColors.darkred),
+                                  ),
+                                  backgroundColor: AppColors.yellow),
+                            );
+                          }
                         },
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:fortune_tiger_game_app/repository/diamonds_repository.dart';
 import 'package:fortune_tiger_game_app/repository/gifts_repository.dart';
+import 'package:fortune_tiger_game_app/services/shared_preferences.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +20,7 @@ class DailyBonusBloc extends Bloc<DailyBonusEvent, DailyBonusState> {
   }
 
   void _getDailyBonusHandler(GetDailyBonusEvent event, Emitter<DailyBonusState> emit) async {
+    SharedPreferencesService storage = await SharedPreferencesService.getInstance();
     final SharedPreferences prefs = await _prefs;
     final int lastBonusTime = prefs.getInt('lastBonusTime') ?? 0;
     final int currentTime = DateTime.now().millisecondsSinceEpoch;
@@ -26,6 +28,7 @@ class DailyBonusBloc extends Bloc<DailyBonusEvent, DailyBonusState> {
 
     if (currentTime - lastBonusTime >= twentyFourHours) {
       _diamondsRepository.increment(1000);
+      storage.diamonds += 1000;
       prefs.setInt('lastBonusTime', currentTime);
     } else {
       emit(FailureGetBonusState());
