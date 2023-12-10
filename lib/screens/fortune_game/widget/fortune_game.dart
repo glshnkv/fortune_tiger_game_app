@@ -165,25 +165,33 @@ class _FortuneWheelWidgetState extends State<FortuneWheelWidget>
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
+
     return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Stack(
-                fit: StackFit.loose,
-                alignment: Alignment.topCenter,
-                children: [
-                  FortuneWheelAnimation(
-                    animationController: _controller,
-                    winner: winner,
-                  ),
-                  const Image(
-                    image: AssetImage('assets/images/fortune-game-images/arrow.png'),
-                  )
-                ],
-              ),
             SizedBox(
-              height: 30,
+              height: media.height * 0.4,
+              child: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.topCenter,
+                  children: [
+                    FortuneWheelAnimation(
+                      animationController: _controller,
+                      winner: winner,
+                    ),
+                    SizedBox(
+                      height: media.height * 0.075,
+                      child: const Image(
+                        image: AssetImage('assets/images/fortune-game-images/arrow.png',),
+                      ),
+                    )
+                  ],
+                ),
+            ),
+            SizedBox(
+              height: media.height * 0.025,
             ),
             ActionButtonWidget(
               title: 'Spin', onTap: () async {

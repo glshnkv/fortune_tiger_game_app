@@ -36,7 +36,6 @@ class OnboardingScreen extends StatelessWidget {
                           ..color = AppColors.darkred,
                       ),
                     ),
-                    // Solid text as fill.
                     Text(
                       textAlign: TextAlign.center,
                       'We\'re delighted to have you on board for an exciting journey filled with puzzles, prizes, and endless fun',
@@ -49,6 +48,7 @@ class OnboardingScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 5,),
               ActionButtonWidget(
                 title: 'Continue',
                 onTap: () {

@@ -25,12 +25,14 @@ class _FortuneGameScreenState extends State<FortuneGameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
+
     return Stack(
       children: <Widget>[
         Image.asset(
           "assets/images/fortune-game-images/background.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: media.height,
+          width: media.width,
           fit: BoxFit.cover,
         ),
         Scaffold(
@@ -41,7 +43,7 @@ class _FortuneGameScreenState extends State<FortuneGameScreen> {
               Column(
                 children: [
                   Image.asset('assets/images/fortune-game-images/top-image.png',
-                      width: MediaQuery.of(context).size.width,
+                      width: media.width,
                       fit: BoxFit.fill),
                   Container(
                       color: AppColors.yellow,
@@ -49,9 +51,10 @@ class _FortuneGameScreenState extends State<FortuneGameScreen> {
                       width: double.infinity),
                 ],
               ),
-
+              SizedBox(
+                height: media.height * 0.025,
+              ),
               FortuneWheelWidget(),
-
               ScoresPanel(),
             ],
           ),

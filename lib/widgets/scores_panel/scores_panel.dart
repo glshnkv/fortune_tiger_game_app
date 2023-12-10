@@ -19,6 +19,7 @@ class _ScoresPanelState extends State<ScoresPanel> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return BlocConsumer<ScoresBloc, ScoresState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -27,7 +28,7 @@ class _ScoresPanelState extends State<ScoresPanel> {
         }
         else if (state is UpdateScoresState) {
           return Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.symmetric(vertical: media.height * 0.01, horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

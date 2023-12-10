@@ -26,12 +26,13 @@ class _LobbyScreenState extends State<LobbyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return Stack(
       children: <Widget>[
         Image.asset(
           "assets/images/lobby-images/background.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: media.height,
+          width: media.width,
           fit: BoxFit.cover,
         ),
         Scaffold(
@@ -42,7 +43,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
               Column(
                 children: [
                   Image.asset('assets/images/lobby-images/top-image.png',
-                      width: MediaQuery.of(context).size.width,
+                      width: media.width,
                       fit: BoxFit.fill),
                   Container(
                       color: AppColors.yellow,
@@ -52,7 +53,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
               ),
               CarouselSlider(
                 options: CarouselOptions(
-                    height: 400.0,
+                    height: media.height * 0.4,
                     viewportFraction: 1.5,
                     initialPage: 0,
                     scrollDirection: Axis.horizontal,
@@ -108,7 +109,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                 },
               ),
               SizedBox(
-                height: 10,
+                height: media.height * 0.01,
               ),
             ],
           ),

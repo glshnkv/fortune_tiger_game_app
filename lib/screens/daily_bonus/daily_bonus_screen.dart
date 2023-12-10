@@ -19,12 +19,14 @@ class DailyBonusScreen extends StatefulWidget {
 class _DailyBonusScreenState extends State<DailyBonusScreen> {
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
+
     return Stack(
       children: <Widget>[
         Image.asset(
           "assets/images/fortune-game-images/background.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: media.height,
+          width: media.width,
           fit: BoxFit.cover,
         ),
         Scaffold(
@@ -35,7 +37,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
               Column(
                 children: [
                   Image.asset('assets/images/lobby-images/top-image.png',
-                      width: MediaQuery.of(context).size.width,
+                      width: media.width,
                       fit: BoxFit.fill),
                   Container(
                       color: AppColors.yellow,
@@ -48,7 +50,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                 builder: (context, state) {
                   if (state is FailureGetBonusState) {
                     return SizedBox(
-                      height: 320,
+                      height: media.height * 0.4,
                       child: Stack(
                         children: [
                           Positioned(
@@ -69,7 +71,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                                       textAlign: TextAlign.center,
                                       'You Already Have Daily Bonus',
                                       style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.w700,
                                         foreground: Paint()
                                           ..style = PaintingStyle.stroke
@@ -82,7 +84,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                                       textAlign: TextAlign.center,
                                       'You Already Have Daily Bonus',
                                       style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: 22,
                                         color: AppColors.white,
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -97,7 +99,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                     );
                   } else {
                     return SizedBox(
-                      height: 320,
+                      height: media.height * 0.4,
                       child: Stack(
                         children: [
                           Positioned(
@@ -115,7 +117,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                                 strokeWidth: 5,
                                 strokeColor: AppColors.darkred,
                                 textStyle: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 22,
                                   color: AppColors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -126,7 +128,7 @@ class _DailyBonusScreenState extends State<DailyBonusScreen> {
                             child: Align(
                               alignment: Alignment.topCenter,
                               child: Image.asset(
-                                  'assets/images/elements/diamond-large.png'),
+                                  'assets/images/elements/diamond-large.png', width: media.width * 0.3,),
                             ),
                           ),
                         ],
